@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option csharp_namespace = "ProfileService";
+
+package profile;
+
+service Profile {
+  rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc CreateSomething (CreateSomethingRequest) returns (SomethingReply);
+  rpc GetSomething (GetSomethingRequest) returns (SomethingReply);
+}

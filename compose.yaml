@@ -1,0 +1,46 @@
+﻿networks:
+  default:
+    driver: bridge
+
+services:
+  profile-service:
+    image: profile-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - default
+    depends_on:
+      - postgrest
+      - redis
+      
+  postgrest:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=190501
+      - POSTGRES_USER=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - default
+    restart: unless-stopped
+    
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+    networks:
+      - default
+    
+volumes:
+  postgres:
+  redis:
